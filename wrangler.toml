@@ -1,3 +1,2 @@
-name = "theinterestinggroup"
-main = "src/index.js"
-compatibility_date = "2025-05-12"
+# wrangler.toml
+name = 'css'
