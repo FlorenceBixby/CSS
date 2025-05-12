@@ -1,2 +1,3 @@
-# wrangler.toml
-name = 'css'
+name = "theinterestinggroup"
+main = "css"
+compatibility_date = "2025-05-12"
