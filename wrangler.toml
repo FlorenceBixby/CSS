@@ -1,3 +1,0 @@
-name = "your-worker-name"
-main = "src/index.js" # or src/index.ts if using TypeScript
-compatibility_date = "2025-05-12"
