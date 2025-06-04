@@ -24,7 +24,55 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet">
 
-    </head>
+    <style>
+        /* CSS for Typewriter Effect */
+        .typewriter-container {
+            font-family: 'Montserrat', sans-serif; /* Keep your existing font */
+            overflow: hidden; /* Ensures the text is hidden until typed */
+            white-space: nowrap; /* Keeps text on a single line */
+            margin: 0 auto; /* Centers the content */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        .typewriter-text, .subtitle-text {
+            display: inline-block; /* Essential for caret to align with text */
+            overflow: hidden; /* Hide overflow until typed */
+            border-right: .15em solid orange; /* The blinking cursor */
+            white-space: nowrap; /* Keep text on a single line */
+            margin: 0;
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: none; /* Reset animation for JS control */
+            font-weight: 600; /* Or whatever makes sense for your H1 */
+        }
+
+        .subtitle-text {
+            border-right: .10em solid #eee; /* Lighter cursor for subtitle */
+            letter-spacing: .08em;
+            font-weight: 400; /* Or whatever makes sense for your P */
+        }
+
+        /* The typing animation */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; } /* Cursor color */
+        }
+
+        /* Adjustments for the actual H1 and P elements */
+        .hero-text h1, .hero-text p {
+            display: inline-block; /* Allow span to take effect */
+            width: 100%; /* Ensure it takes full width for centering */
+            text-align: center;
+        }
+    </style>
+
+</head>
 <body>
 
     <header id="masthead" class="site-header">
@@ -42,11 +90,12 @@
                 </div>
 
             </div>    
-        </nav></header><div id="hero" class="hero overlay">
+        </nav>
+    </header><div id="hero" class="hero overlay">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>An IT Procurmenet Company</h1>
-                <p>Work Smarter, Scale Faster </p>
+                <h1><span id="typewriter-text"></span></h1>
+                <p><span id="subtitle-text"></span></p>
                 <a href="#" class="btn btn-border">Learn more</a>
             </div></div></div><main id="main" class="site-main">
 
@@ -181,7 +230,7 @@
                     <a class="site-title"><span>The </span>InterestingGroup</a>
                     <p>Work Smarter, Scale Faster</p>
                     <p>Sounds interesting, we're in!</p>
-                    <p>Contact us:  info@TheInterestingGroup.com</p>
+                    <p>Contact us: info@TheInterestingGroup.com</p>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12 text-right">
                     <div class="social-links">
@@ -208,5 +257,33 @@
     <script src="assets/js/jquery.countTo.min.js"></script>
     <script src="assets/js/jquery.shuffle.min.js"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const h1Text = "An IT Procurement Company";
+            const pText = "Work Smarter, Scale Faster";
+            const h1Element = document.getElementById("typewriter-text");
+            const pElement = document.getElementById("subtitle-text");
+            let h1CharIndex = 0;
+            let pCharIndex = 0;
+
+            function typeWriter(element, text, index, callback) {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(() => typeWriter(element, text, index, callback), 70); // Adjust typing speed
+                } else {
+                    if (callback) callback();
+                }
+            }
+
+            // Start typing the H1 text
+            typeWriter(h1Element, h1Text, h1CharIndex, () => {
+                // Once H1 is typed, start typing the P text
+                setTimeout(() => {
+                    typeWriter(pElement, pText, pCharIndex);
+                }, 500); // Delay before typing the subtitle
+            });
+        });
+    </script>
 </body>
 </html>
