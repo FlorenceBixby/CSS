@@ -27,74 +27,103 @@
     <style>
         /* CSS for Typewriter Effect */
         .typewriter-container {
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
+            font-family: 'Montserrat', sans-serif; /* Keep your existing font */
+            overflow: hidden; /* Ensures the text is hidden until typed */
+            white-space: nowrap; /* Keeps text on a single line */
+            margin: 0 auto; /* Centers the content */
+            letter-spacing: .15em; /* Adjust as needed */
             animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
 
         .typewriter-text, .subtitle-text {
-            display: inline-block;
-            overflow: hidden;
-            border-right: .15em solid orange;
-            white-space: nowrap;
+            display: inline-block; /* Essential for caret to align with text */
+            overflow: hidden; /* Hide overflow until typed */
+            border-right: .15em solid orange; /* The blinking cursor */
+            white-space: nowrap; /* Keep text on a single line */
             margin: 0;
-            letter-spacing: .15em;
-            animation: none;
-            font-weight: 600;
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: none; /* Reset animation for JS control */
+            font-weight: 600; /* Or whatever makes sense for your H1 */
         }
 
         .subtitle-text {
-            border-right: .10em solid #eee;
+            border-right: .10em solid #eee; /* Lighter cursor for subtitle */
             letter-spacing: .08em;
-            font-weight: 400;
+            font-weight: 400; /* Or whatever makes sense for your P */
         }
 
+        /* The typing animation */
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
 
+        /* The typewriter cursor effect */
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: orange; }
+            50% { border-color: orange; } /* Cursor color */
         }
 
+        /* Adjustments for the actual H1 and P elements */
         .hero-text h1, .hero-text p {
-            display: inline-block;
-            width: 100%;
+            display: inline-block; /* Allow span to take effect */
+            width: 100%; /* Ensure it takes full width for centering */
             text-align: center;
         }
 
-        /* --- CLOUDS CSS START --- */
-        .clouds {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 220px;
-            pointer-events: none;
-            z-index: 2; /* Above background, below hero text */
-        }
+        /* CSS for moving clouds */
         .cloud {
             position: absolute;
-            background: #fff;
-            background: linear-gradient(90deg, #fff 60%, #f1f1f1 100%);
-            border-radius: 50%;
-            opacity: 0.7;
-            width: 120px;
-            height: 60px;
-            box-shadow:
-                60px 0px 0px 0px #fff,
-                30px 20px 0px 0px #fff,
-                90px 20px 0px 0px #fff;
+            background-image: url('assets/img/cloud.png'); /* **IMPORTANT: Replace with your cloud image path** */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: moveClouds linear infinite;
+            z-index: 0; /* Ensure clouds are behind content */
         }
-        .cloud1 { top: 40px; left: -150px; width: 120px; height: 60px; }
-        .cloud2 { top: 100px; left: -300px; width: 180px; height: 80px; opacity: 0.6; }
-        .cloud3 { top: 60px; left: -500px; width: 90px; height: 45px; opacity: 0.5; }
-        /* --- CLOUDS CSS END --- */
+
+        /* Define different cloud sizes and starting positions for variety */
+        .cloud-small {
+            width: 150px;
+            height: 75px;
+            top: 10%;
+            left: -20%; /* Start off-screen */
+            animation-duration: 40s;
+            animation-delay: 0s;
+        }
+
+        .cloud-medium {
+            width: 250px;
+            height: 125px;
+            top: 25%;
+            left: -30%;
+            animation-duration: 60s;
+            animation-delay: 5s;
+        }
+
+        .cloud-large {
+            width: 350px;
+            height: 175px;
+            top: 5%;
+            left: -40%;
+            animation-duration: 80s;
+            animation-delay: 10s;
+        }
+
+        /* Keyframes for cloud animation */
+        @keyframes moveClouds {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(100vw + 400px)); /* Move across the screen plus some extra for large clouds */
+            }
+        }
+
+        /* Ensure the hero section allows for positioned children */
+        .hero {
+            position: relative;
+            overflow: hidden; /* Hide clouds when they go off-screen */
+        }
     </style>
 
 </head>
@@ -118,15 +147,15 @@
         </nav>
     </header>
 
-    <!-- --- CLOUDS HTML START --- -->
-    <div class="clouds">
-      <div class="cloud cloud1"></div>
-      <div class="cloud cloud2"></div>
-      <div class="cloud cloud3"></div>
-    </div>
-    <!-- --- CLOUDS HTML END --- -->
-
     <div id="hero" class="hero overlay">
+        <div class="cloud cloud-small" style="top: 15%; left: -10%;"></div>
+        <div class="cloud cloud-medium" style="top: 30%; left: -25%;"></div>
+        <div class="cloud cloud-large" style="top: 5%; left: -40%;"></div>
+        <div class="cloud cloud-small" style="top: 20%; left: -60%;"></div>
+        <div class="cloud cloud-medium" style="top: 10%; left: -80%;"></div>
+        <div class="cloud cloud-large" style="top: 40%; left: -100%;"></div>
+
+
         <div class="hero-content">
             <div class="hero-text">
                 <h1><span id="typewriter-text"></span></h1>
@@ -135,15 +164,161 @@
             </div>
         </div>
     </div>
-    <!-- ... rest of your HTML ... -->
 
     <main id="main" class="site-main">
-        <!-- ... main content ... -->
-    </main>
-    <footer id="colophon" class="site-footer">
-        <!-- ... footer content ... -->
-    </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <section class="site-section section-features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>Forward Thinking Solutions</h2>
+                        <p>Whether it's navigating software licensing or harnessing the power of AI, we're here to help you tackle the next challenge, no matter what it brings</p>
+                    </div>
+                    <div class="col-sm-7 hidden-xs">
+                        <img src="assets/img/ipad-pro.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section><section class="site-section section-services gray-bg text-center">
+            <div class="container">
+                <h2 class="heading-separator">Our Services</h2>
+                <p class="subheading-text">"The only way to do great work is to love what you do" - Steve Jobs</p>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/anchor.svg" alt="">
+                            <h3 class="service-title">Mobility & IOT</h3>
+                            <p class="service-info">We offer wireless voice (3G/4G/5G), handsets, SIMs, backup, MDM, analytics (AI/thermal imaging), and IoT integration (dashboards/sensors) to streamline communication, data, and operational efficiency.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/bycicle.svg" alt="">
+                            <h3 class="service-title">Cloud Compute</h3>
+                            <p class="service-info">Infrastructure solutions (colocation, hybrid cloud, managed Azure/AWS/IBM, security) with continuity services (backup, disaster recovery, DaaS, CDN) ensure operational resilience and scalable performance.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/paper-plane.svg" alt="">
+                            <h3 class="service-title">Cybersecurity & SECaaS</h3>
+                            <p class="service-info">Comprehensive cybersecurity: Identify (vCISO, testing), Protect (firewalls, zero-trust), Detect (AI threat detection, SOCaaS), and Respond (incident handling) to safeguard assets against evolving threats.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/photo.svg" alt="">
+                            <h3 class="service-title">Managed Services</h3>
+                            <p class="service-info">IT and business servicesâ€”hosted email, managed Wi-Fi, Office 365, cloud migration, helpdesk, NOC, and securityâ€”streamline operations, enhance security, and drive seamless digital transformation.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/microphone.svg" alt="">
+                            <h3 class="service-title">Network & Voice</h3>
+                            <p class="service-info">Data solutions (internet, VPLS, MPLS/VPN), voice services (POTS/SIP/PRI), and access types (fiber, wireless, coax, DSL, T1, 3G/4G/5G) meet diverse connectivity needs at any scale.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/rocket.svg" alt="">
+                            <h3 class="service-title">Contact Center & CX</h3>
+                            <p class="service-info">Advanced communication and analytics toolsâ€”custom dashboards, CRM integration, omni-channel support, IVR, chatbots, workforce optimization, and transcriptionâ€”boost operational efficiency and customer experience.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/basket.svg" alt="">
+                            <h3 class="service-title">SD-WAN</h3>
+                            <p class="service-info">Network solutions with automatic failover, link aggregation, TCP/IP optimization, SASE, and proactive monitoring ensure secure, high-performance connectivity for resilient operations.</p>
+                        </div></div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="assets/img/chemestry.svg" alt="">
+                            <h3 class="service-title">UC & Collaboration</h3>
+                            <p class="service-info">Hosted voice, video conferencing, messaging, file sharing, and fax services for seamless communication.</p>
+                        </div></div>
+                </div>    
+            </div>
+           </section><section class="site-section section-portfolio">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="heading-separator">Latest Work</h2>
+                    <p class="subheading-text">This is some of our best work</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-1.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-2.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-3.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-4.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-5.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-6.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-1.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="assets/img/portfolio-2.jpg" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div></div>
+                </div>
+            </div>
+        </section></main><footer id="colophon" class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <a class="site-title"><span>The </span>InterestingGroup</a>
+                    <p>Work Smarter, Scale Faster</p>
+                    <p>Sounds interesting, we're in!</p>
+                    <p>Contact us: info@TheInterestingGroup.com</p>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 text-right">
+                    <div class="social-links">
+                        <a class="twitter-bg" href="#"><i class="fa fa-twitter"></i></a>
+                        <a class="facebook-bg" href="#"><i class="fa fa-facebook"></i></a>
+                        <a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a>
+                        <a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i></a>
+                    </div></div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <p>&copy; TheInterestingGroup</p>
+                        <p>All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div></footer><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap-select.min.js"></script>
     <script src="assets/js/jquery.slicknav.min.js"></script>
@@ -163,47 +338,20 @@
                 if (index < text.length) {
                     element.innerHTML += text.charAt(index);
                     index++;
-                    setTimeout(() => typeWriter(element, text, index, callback), 70);
+                    setTimeout(() => typeWriter(element, text, index, callback), 70); // Adjust typing speed
                 } else {
                     if (callback) callback();
                 }
             }
 
             // Start typing the H1 text
-            typeWriter(h1Element, h1Text, 0, function() {
-                // After H1, type subtitle
-                typeWriter(pElement, pText, 0);
+            typeWriter(h1Element, h1Text, h1CharIndex, () => {
+                // Once H1 is typed, start typing the P text
+                setTimeout(() => {
+                    typeWriter(pElement, pText, pCharIndex);
+                }, 500); // Delay before typing the subtitle
             });
-
-            // --- CLOUDS JS START ---
-            const cloudElements = [
-              { el: document.querySelector('.cloud1'), speed: 0.3 },
-              { el: document.querySelector('.cloud2'), speed: 0.2 },
-              { el: document.querySelector('.cloud3'), speed: 0.15 }
-            ];
-
-            function animateClouds() {
-              cloudElements.forEach((cloud, idx) => {
-                let left = parseFloat(cloud.el.style.left) || parseFloat(getComputedStyle(cloud.el).left);
-                left += cloud.speed;
-                if (left > window.innerWidth + 100) {
-                  left = -200 - Math.random()*200;
-                }
-                cloud.el.style.left = left + "px";
-              });
-              requestAnimationFrame(animateClouds);
-            }
-
-            // Initialize left positions
-            cloudElements.forEach(cloud => {
-              cloud.el.style.left = getComputedStyle(cloud.el).left;
-            });
-
-            animateClouds();
-            // --- CLOUDS JS END ---
-
         });
     </script>
 </body>
 </html>
-
